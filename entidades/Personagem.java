@@ -1,3 +1,6 @@
+package entidades;
+
+import cenario.Coordenadas;
 
 
 public abstract class Personagem implements Acao{
@@ -26,5 +29,12 @@ public abstract class Personagem implements Acao{
             this.def = 0 ;
         else    
             this.def = def ;
+    }
+    public Coordenadas getPos() {
+        return this.pos ;
+    }
+
+    public void setPos(Coordenadas pos) {
+        this.pos = pos ;
     }
 }
