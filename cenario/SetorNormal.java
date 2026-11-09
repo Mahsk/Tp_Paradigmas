@@ -13,7 +13,7 @@ public class SetorNormal extends Setor {
 
     // Setor normal permite a procura 
     @Override
-    public boolean executarProcura() {
+    public boolean permiteProcura() {
         return true; 
     }
 }
