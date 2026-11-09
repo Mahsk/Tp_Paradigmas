@@ -41,15 +41,6 @@ public abstract class Setor {
         return coordenada; 
     }
 
-    // atalho pro tabuleiro nao precisar fazer getCoordenada().getX()
-    public int getX() { 
-        return coordenada.getX(); 
-    }
-    
-    public int getY() { 
-        return coordenada.getY(); 
-    }
-
     public boolean[] getPortas(){
         return portas; 
     }
