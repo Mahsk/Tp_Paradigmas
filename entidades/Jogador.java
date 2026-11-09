@@ -9,6 +9,8 @@ public abstract class Jogador extends Personagem {
         super(atk,def,pos) ;
     }
 
+    //metodos
+
     @Override
     public void atacar(Personagem alvo) {
         alvo.setDef(alvo.getDef() - this.getAtk());
