@@ -13,7 +13,7 @@ public class SetorPrivado extends Setor {
 
     // Setor privado nao permite a procura
     @Override
-    public boolean executarProcura() {
+    public boolean permiteProcura() {
         return false; 
     }
 }
