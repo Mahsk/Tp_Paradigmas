@@ -20,7 +20,7 @@ public class SetorOculto extends Setor {
 
     // Setor oculto permite a procura
     @Override
-    public boolean executarProcura() {
+    public boolean permiteProcura() {
         return true;
     }
 }
