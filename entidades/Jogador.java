@@ -3,7 +3,7 @@ package entidades;
 import cenario.Coordenadas;
 import java.util.Random;
 
-public abstract class Jogador extends Personagem {
+public abstract class Jogador extends Personagem implements AcaoPlayer{
     //construtor
     public Jogador(int atk, int def, Coordenadas pos) {
         super(atk,def,pos) ;
@@ -16,10 +16,12 @@ public abstract class Jogador extends Personagem {
         alvo.setDef(alvo.getDef() - this.getAtk());
     }
 
+    @Override
     public void movimentar (Coordenadas destino) {
         this.setPos(destino);
     }
 
+    @Override
     public int procurar() {
         Random rand = new Random();
         int resultado = rand.nextInt(6) + 1;
