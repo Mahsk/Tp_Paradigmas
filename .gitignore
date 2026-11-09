@@ -1,0 +1,26 @@
+# Arquivos compilados do Java
+*.class
+
+# Diretórios de saída de compilação
+bin/
+out/
+target/
+build/
+
+# Configurações do IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Configurações do VS Code e Eclipse
+.vscode/
+.settings/
+.classpath
+.project
+
+# Arquivos temporários e do sistema operacional
+.DS_Store
+Thumbs.db
+*.tmp
+*.log

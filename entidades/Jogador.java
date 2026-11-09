@@ -1,4 +1,5 @@
-public class Jogador extends Personagem implements Acao {
+package entidades;
+public abstract class Jogador extends Personagem implements Acao {
     //construtor
     public Jogador(int atk, int def, Coordenadas pos) {
         super(atk,def,pos) ;
