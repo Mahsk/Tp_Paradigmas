@@ -1,5 +1,8 @@
+package cenario;
+
 import java.util.ArrayList;
 import java.util.List;
+import entidades.Inimigo;
 
 public abstract class Setor {
     // atributos 
