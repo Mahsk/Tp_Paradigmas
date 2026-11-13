@@ -1,3 +1,5 @@
+package cenario;
+
 public class SetorPrivado extends Setor {
 
     public SetorPrivado(Coordenada coordenada, boolean[] portas) {
