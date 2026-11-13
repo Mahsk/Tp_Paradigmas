@@ -1,7 +1,5 @@
 package cenario;
 
-import java.util.Objects; # pra comparar coordenada
-
 public class Coordenadas {
     private int x;
     private int y;
@@ -24,20 +22,19 @@ public class Coordenadas {
     public void setY(int y) {
         this.y = y;
     }
-}
 
+    @Override
+    public boolean equals(Object other) {
+        if(!(other instanceof Coordenadas)) {
+            return false;
+        }
 
-@Override
-public boolean equals(Object other) {
-    if(!(other instanceof Coordenadas)) {
-        return false;
+        Coordenadas that = (Coordenadas) other;
+        return ((this.x == that.x) && (this.y == that.y));
     }
 
-    Coordenadas that = (Coordenadas) other;
-    return this.x.equals(that.x) && this.y.equals(that.y);
-}
-
-@Override
-public String toString() {
-    return "(" + x + ", " + y + ")";
+    @Override
+    public String toString() {
+        return "(" + x + ", " + y + ")";
+    }
 }
