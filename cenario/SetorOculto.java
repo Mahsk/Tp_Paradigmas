@@ -7,7 +7,7 @@ public class SetorOculto extends Setor {
         super(coordenada, portas);
     }
 
-    // Sorteia aleatoriamente se pode realizar o ataque
+    // Sorteia aleatoriamente se permite o ataque
     @Override
     public boolean permiteAtaque() {
         return random.nextBoolean();
