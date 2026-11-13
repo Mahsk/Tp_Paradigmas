@@ -4,7 +4,7 @@ public class SetorNormal extends Setor {
         super(coordenada, portas);
     }
 
-    // Setor normal prmite o ataque normalmente
+    // Setor normal permite o ataque normalmente
     @Override
     public boolean permiteAtaque() {
         return true; 
