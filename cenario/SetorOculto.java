@@ -1,3 +1,5 @@
+package cenario;
+
 import java.util.Random;
 
 public class SetorOculto extends Setor {
