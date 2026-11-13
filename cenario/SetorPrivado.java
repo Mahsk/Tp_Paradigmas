@@ -4,10 +4,9 @@ public class SetorPrivado extends Setor {
         super(coordenada, portas);
     }
 
-    // Setor privado realiza o ataque normalmente
+    // Setor privado permite o ataque normalmente
     @Override
-    public boolean receberAtaque(Inimigo inimigo, int dano) {
-        inimigo.setDef(inimigo.getDef() - dano);
+    public boolean permiteAtaque() {
         return true;
     }
 
