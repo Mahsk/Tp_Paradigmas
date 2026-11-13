@@ -4,11 +4,10 @@ public class SetorNormal extends Setor {
         super(coordenada, portas);
     }
 
-    // Setor normal realiza o ataque normalmente
+    // Setor normal prmite o ataque normalmente
     @Override
-    public boolean receberAtaque(Inimigo inimigo, int dano) {
-        inimigo.setDef(inimigo.getDef() - dano);
-        return true; // Retorna true indicando que o ataque acertou
+    public boolean permiteAtaque() {
+        return true; 
     }
 
     // Setor normal permite a procura 
