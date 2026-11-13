@@ -2,7 +2,7 @@ package cenario;
 
 public class SetorNormal extends Setor {
 
-    public SetorNormal(Coordenada coordenada, boolean[] portas) {
+    public SetorNormal(Coordenadas coordenada, boolean[] portas) {
         super(coordenada, portas);
     }
 
@@ -18,4 +18,3 @@ public class SetorNormal extends Setor {
         return true; 
     }
 }
-
