@@ -54,7 +54,7 @@ public abstract class Setor {
     }
 
     // Metodos Abstratos 
-    // Cada setor vai ditar como reage a um ataque e se permite a procura
-    public abstract boolean receberAtaque(Inimigo inimigo, int dano); 
+    // Cada setor vai ditar se permite ataque e procura
+    public abstract boolean permiteAtaque(); 
     public abstract boolean permiteProcura();
 
