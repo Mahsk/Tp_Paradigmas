@@ -9,13 +9,8 @@ public class SetorOculto extends Setor {
 
     // Sorteia aleatoriamente se pode realizar o ataque
     @Override
-    public boolean receberAtaque(Inimigo inimigo, int dano) {
-        if (random.nextBoolean()) {
-            inimigo.setDef(inimigo.getDef() - dano);
-            return true; 
-        } else {
-            return false; 
-        }
+    public boolean permiteAtaque() {
+        return random.nextBoolean();
     }
 
     // Setor oculto permite a procura
