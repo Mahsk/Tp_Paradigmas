@@ -1,3 +1,7 @@
+package cenario;
+
+import entidades.Inimigo;
+import entidades.Jogador;
 import java.util.Random;
 
 public class Tabuleiro {
@@ -17,7 +21,7 @@ public class Tabuleiro {
             for (int y = 1; y <= TAM; y++) {
                 boolean[] portas = portasTabuleiro[x][y];
 
-                // Cima: herda a porta de baixo do setor de cima
+                // Cima: herda a porta de baixo [1] do setor de cima (y - 1)
                 portas[0] = ((y > 1) && (portasTabuleiro[x][y - 1][1]));
 
                 // Baixo: aberta, menos na borda
@@ -26,26 +30,28 @@ public class Tabuleiro {
                 // Direita: aberta no meio e em posições fixas
                 portas[2] = (x < TAM) && ((y == 3) || ((y == 1) && (x == 2)) || ((y == 5) && (x == 4)));
 
-                // Esquerda: herda a porta à direita de antes
+                // Esquerda: herda a porta à direita [2] de antes
                 portas[3] = ((x > 1) && (portasTabuleiro[x - 1][y][2]));
 
                 int tipo = random.nextInt(3);
 
+                Coordenadas posicao = new Coordenadas(x, y);
+
                 if ((x == 3) && (y == 3)) {
-                    setores[x - 1][y - 1] = new SetorNormal(x, y, portas);                
+                    setores[x - 1][y - 1] = new SetorNormal(posicao, portas);
                 }
                 else {
                     switch (tipo) {
                         case 0:
-                            setores[x - 1][y - 1] = new SetorNormal(x, y, portas);                            
+                            setores[x - 1][y - 1] = new SetorNormal(posicao, portas);
                             break;
 
                         case 1:
-                            setores[x - 1][y - 1] = new SetorOculto(x, y, portas);
+                            setores[x - 1][y - 1] = new SetorOculto(posicao, portas);
                             break;
                         
                         case 2:
-                            setores[x - 1][y - 1] = new SetorPrivado(x, y, portas);
+                            setores[x - 1][y - 1] = new SetorPrivado(posicao, portas);
                             break;
                     }                
                 }
@@ -65,11 +71,21 @@ public class Tabuleiro {
         fonteInfeccao = new Coordenadas(x, y);
     }
 
+    /* Getters */
+    // Retorna o setor de uma posição
+    public Setor getSetor(Coordenadas pos) {
+        if ((pos == null) || (!posValida(pos))) {
+            return null;
+        }
+
+        return setores[(pos.getX()) - 1][(pos.getY()) - 1];
+    }
+
     /* Métodos */
     // Verifica se uma posição está dentro do tabuleiro
     // Retorna true se sim, false se não
-    public boolean posValida(int x, int y) {
-        return ((x >= 1 && x <= TAM) && (y >= 1 && y <= TAM));
+    public boolean posValida(Coordenadas pos) {
+        return ((pos.getX() >= 1) && (pos.getX() <= TAM) && (pos.getY() >= 1) && (pos.getY() <= TAM));
     }
 
     // Verifica se a posição tem a fonte da infecção
@@ -78,31 +94,23 @@ public class Tabuleiro {
         return ((pos != null) && (pos.getX() == fonteInfeccao.getX()) && (pos.getY() == fonteInfeccao.getY()));
     }
 
-    // Retorna o setor de uma posição
-    public Setor getSetor(int x, int y) {
-        if (!posValida(x, y)) {
-            return null;
-        }
-
-        return setores[x - 1][y - 1];
-    }
-
     // Verifica se há porta de um setor para o outro
     // Retorna true se sim, false se não
-    public boolean temPassagem (int origemX, int origemY, int destinoX, int destinoY) {
-        if ((!posValida(origemX, origemY)) || (!posValida(destinoX, destinoY))) {
+    public boolean temPassagem (Coordenadas origem, Coordenadas destino) {
+        if ((origem == null) || (destino == null) || (!posValida(origem)) || (!posValida(destino))) {
             return false;
         }
-    
-        int dx = destinoX - origemX;
-        int dy = destinoY - origemY;
+
+        int dx = destino.getX() - origem.getX();
+        int dy = destino.getY() - origem.getY();
 
         // Não deixa se movimentar na diagonal
+        // 1 = movimento na vertical / 1 = movimento na vertical | se for 2, se movimentou na diagonal
         if (Math.abs(dx) + Math.abs(dy) != 1) {
             return false;        
         }
 
-        boolean[] portas = getSetor(origemX, origemY).getPortas();
+        boolean[] portas = getSetor(origem).getPortas();
 
         if (dy == -1) {
             return portas[0];
@@ -138,14 +146,18 @@ public class Tabuleiro {
             System.out.print("   ");
 
             for (int x = 1; x <= TAM; x++) {
-                Setor setor = getSetor(x, y);
+                Coordenadas pos = new Coordenadas(x, y);
+
+                Setor setor = getSetor(pos);
+
                 boolean[] portas = setor.getPortas();
                 boolean visivel = setor.isVisitado();
 
                 System.out.print("+");
 
                 if (y > 1) {
-                    visivel = (visivel || getSetor(x, y - 1).isVisitado());
+                    Coordenadas posAbaixo = new Coordenadas(x, y - 1);
+                    visivel = (visivel || getSetor(posAbaixo).isVisitado());
                 }
 
                 // Imprime porta se houver e tiver visível
@@ -164,12 +176,17 @@ public class Tabuleiro {
 
             // Desenha as paredes dos lados e conteúdo
             for (int x = 1; x <= TAM; x++) {
-                Setor setor = getSetor(x, y);
+                Coordenadas pos = new Coordenadas(x, y);
+
+                Setor setor = getSetor(pos);
+
                 boolean[] portas = setor.getPortas();
                 boolean visivel = setor.isVisitado();
 
                 if (x > 1) {
-                    visivel = (visivel || getSetor(x - 1, y).isVisitado());
+                    Coordenadas posEsquerda = new Coordenadas(x, y);
+                    
+                    visivel = (visivel || getSetor(posEsquerda).isVisitado());
                 }
 
                 // Imprime porta se houver e tiver visível
@@ -181,6 +198,7 @@ public class Tabuleiro {
                 }
 
                 // Verifica a posição dos jogadores
+                // null caso tenha morrido
                 boolean p1Aqui = ((posP1 != null) && (posP1.getX() == x) && (posP1.getY() == y));
                 boolean p2Aqui = ((posP2 != null) && (posP2.getX() == x) && (posP2.getY() == y));
 
@@ -221,7 +239,7 @@ public class Tabuleiro {
 
         // Imprime os detalhes dos setores abaixo
         // Se estiverem no mesmo setor
-        if ((posP1 != null) && (posP2 != null) && (posP1.getX() == posP2.getX()) && (posP1.getY() == posP2.getY())) {
+        if ((posP1 != null) && (posP2 != null) && (posP1.equals(posP2))) {
             imprimirSetor(posP1, p1, p2);
         }
         // Se estiverem em setores diferentes
@@ -241,22 +259,22 @@ public class Tabuleiro {
         int x = pos.getX();
         int y = pos.getY();
 
-        if (!posValida(x, y)) {
+        if (!posValida(pos)) {
             return;
         }
 
-        Setor setor = getSetor(x, y);
+        Setor setor = getSetor(pos);
+
         boolean[] portas = setor.getPortas();
 
         System.out.println();
         System.out.println("Setor [" + x + "," + y + "]");
 
-        // Parede ou porta de cima
+        // Cima: parede ou porta
         System.out.println("+" + (portas[0] ? "---------*---------" : "-------------------") + "+");
 
         // Atributos dos inimigos
         String inimigos = "";
-
         for (Inimigo inimigo : setor.getInimigos()) {
             if (inimigo.getDef() > 0) {
                 if (!inimigos.isEmpty()) {
@@ -286,6 +304,7 @@ public class Tabuleiro {
             atributos += p2.getAtk() + "/" + p2.getDef();
         }
 
+        // Imprimindo as linhas
         imprimirLinhaSetor(inimigos, false, false);
         imprimirLinhaSetor("", false, false);
         imprimirLinhaSetor("", portas[3], portas[2]);
@@ -296,7 +315,7 @@ public class Tabuleiro {
         System.out.println("+" + (portas[1] ? "---------*---------" : "-------------------") + "+");
     }
 
-    // Imprime uma linha do setor com as paredes ou portaslaterais
+    // Imprime uma linha do setor com as paredes ou portas laterais
     private void imprimirLinhaSetor(String texto, boolean esquerda, boolean direita) {
         System.out.printf("%c %-17.17s %c\n", (esquerda ? '*' : '|'), texto, (direita ? '*' : '|'));
     }
