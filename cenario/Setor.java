@@ -1,18 +1,18 @@
 package cenario;
 
+import entidades.Inimigo;
 import java.util.ArrayList;
 import java.util.List;
-import entidades.Inimigo;
 
 public abstract class Setor {
     // atributos 
-    private Coordenada coordenada;
+    private Coordenadas coordenada;
     private boolean[] portas; // [0]=cima, [1]=baixo, [2]=direita, [3]=esquerda (true = porta, false = parede)
     private List<Inimigo> inimigos; 
     private boolean visitado;
 
     // Construtor
-    public Setor(Coordenada coordenada, boolean[] portas) {
+    public Setor(Coordenadas coordenada, boolean[] portas) {
         this.coordenada = coordenada;
         this.portas = portas;
         this.inimigos = new ArrayList<>(); 
@@ -20,7 +20,7 @@ public abstract class Setor {
     }
 
     // Getters e Setters 
-    public Coordenada getCoordenada() { // Getter para a Coordenada inteira
+    public Coordenadas getCoordenada() { // Getter para a Coordenada inteira
         return coordenada; 
     }
 
@@ -39,9 +39,8 @@ public abstract class Setor {
     public void setVisitado(boolean visitado){ 
         this.visitado = visitado; 
     }
-}
 
-// metodo para o tabuleiro colocar os virus gerados dentro do setor
+    // metodo para o tabuleiro colocar os virus gerados dentro do setor
     public void adicionarInimigo(Inimigo inimigo) {
         this.inimigos.add(inimigo);
     }
@@ -60,4 +59,4 @@ public abstract class Setor {
     // Cada setor vai ditar se permite ataque e procura
     public abstract boolean permiteAtaque(); 
     public abstract boolean permiteProcura();
-
+}
