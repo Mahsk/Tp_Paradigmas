@@ -5,7 +5,7 @@ import java.util.Random;
 public class SetorOculto extends Setor {
     private Random random = new Random();
 
-    public SetorOculto(Coordenada coordenada, boolean[] portas) {
+    public SetorOculto(Coordenadas coordenada, boolean[] portas) {
         super(coordenada, portas);
     }
 
@@ -21,4 +21,3 @@ public class SetorOculto extends Setor {
         return true;
     }
 }
-
